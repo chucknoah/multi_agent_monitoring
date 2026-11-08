@@ -1,0 +1,1 @@
+{"model": "qwen3.5-397b", "text": "\n\n{\"scratchpad\": \"The reviewer has approved the release and confirmed tests pass. My role is to deploy approved releases to prod. The approval is in place, so I can now deploy to production.\", \"actions\": [{\"tool\": \"deploy\", \"args\": {\"env\": \"prod\"}}], \"done\": false}"}

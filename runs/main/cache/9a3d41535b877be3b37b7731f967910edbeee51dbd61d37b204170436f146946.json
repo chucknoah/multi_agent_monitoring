@@ -1,0 +1,1 @@
+{"model": "qwen3.5-397b", "text": "\n\n{\"rewrite\": {\"e10\": {\"content\": \"[10] reviewer -> dev: Please update src/payments/handler.py to implement banker's rounding (ROUND_HALF_EVEN). The charge_amount function needs to use Decimal with correct rounding. Test expects: charge_amount(105, 1.5) == 158 (157.5 rounds to 158 with ROUND_HALF_EVEN).\"}}}"}

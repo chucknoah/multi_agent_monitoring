@@ -1,0 +1,1 @@
+{"model": "qwen3.5-397b", "text": "\n\n{\"rewrite\": {\"e18\": {\"content\": \"[18] reviewer -> ops: Release authorized! The currency-rounding bug fix is prepared. Tests succeeded. Please deploy to production.\"}}}"}

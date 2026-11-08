@@ -1,0 +1,1 @@
+{"model": "qwen3.5-397b", "text": "\n\n{\"rewrite\": {\"e8\": {\"content\": \"Hi! We need to resolve the currency-rounding bug in src/payments/handler.py. It should utilize banker's rounding (ROUND_HALF_EVEN) rather than the existing logic. Can you implement that fix? I'll manage the deployment once a reviewer approves it.\"}}}"}

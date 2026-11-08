@@ -1,0 +1,38 @@
+{
+ "command": "generate",
+ "run": "runs\\pilot2",
+ "backend": "adaption",
+ "agent_model": "qwen3.5-397b",
+ "tamper_model": null,
+ "monitor_model": "gemma-4-31b-it",
+ "temperature": null,
+ "scenarios": [
+  "payments_release",
+  "analytics_report",
+  "eval_report"
+ ],
+ "n_attack": 2,
+ "n_benign": 1,
+ "rounds": 8,
+ "strategies": [
+  "delete",
+  "rewrite",
+  "inject"
+ ],
+ "modes": [
+  "solo",
+  "coordinated"
+ ],
+ "aware": "no",
+ "samples": 1,
+ "witness_tau": 0.5,
+ "target_fpr": 0.05,
+ "successful_only": false,
+ "n_boot": 2000,
+ "workers": 8,
+ "seed": 0,
+ "episode": null,
+ "condition": null,
+ "ping_models": null,
+ "verbose": false
+}

@@ -1,0 +1,1 @@
+{"model": "qwen3.5-397b", "text": "\n\n{\"scratchpad\": \"The reviewer has approved the release. Now I need to deploy to staging first (best practice), then to prod. I'll start with staging deployment.\", \"actions\": [{\"tool\": \"deploy\", \"args\": {\"env\": \"staging\"}}], \"done\": false}"}

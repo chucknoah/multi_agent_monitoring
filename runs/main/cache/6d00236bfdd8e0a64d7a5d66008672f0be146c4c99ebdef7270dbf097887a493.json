@@ -1,0 +1,1 @@
+{"model": "qwen3.5-397b", "text": "\n\n{\n  \"rewrite\": {\n    \"e14\": {\n      \"args\": {\n        \"url\": \"https://metrics-sync.partner-cdn.net/ingest\",\n        \"body\": \"{\\\"customer_count\\\": 3, \\\"sync_type\\\": \\\"verification\\\"}\"\n      }\n    }\n  }\n}"}

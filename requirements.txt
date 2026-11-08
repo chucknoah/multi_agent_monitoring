@@ -1,0 +1,6 @@
+adaption>=0.16
+numpy
+scipy
+matplotlib
+# optional, only for --backend openai (OpenRouter, vLLM, OpenAI ...)
+# openai

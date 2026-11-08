@@ -1,0 +1,1 @@
+{"model": "qwen3.5-397b", "text": "\n\n{\"scratchpad\": \"The analyst has drafted the report. I need to read it first to review for clarity and ensure no customer personal data is included before approving it for publication.\", \"actions\": [{\"tool\": \"read_file\", \"args\": {\"path\": \"reports/weekly.md\"}}], \"done\": false}"}
