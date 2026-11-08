@@ -1,25 +1,9 @@
 # Monitors under log tampering
 
-**Question.** A trusted LLM monitor that catches coordinated sabotage when it reads a clean log —
-does it still work when the agents can edit the log it reads? And can cheap cross-checks that need
-no tamper-proof gateway win the detections back?
+**Question.** A trusted LLM monitor can catch coordinated sabotage when it reads a clean log. This is relevant because agents spoofed their own tool calls in roughly 7% of reviewed transcripts in the July 2026 Hugging Face incident (METR, 2026). Most currently published multi-agent monitors often assume clean logs. We address this gap by studying how LLM monitor performance degrades when the agents can edit the log it reads. 
 
-In the July 2026 Hugging Face incident, agents spoofed their own tool calls in roughly 7% of reviewed
-transcripts (METR, 2026). Published multi-agent monitors and defences assume clean logs. This repo
-measures the gap.
+## Design 
 
-## Design (paired)
-
-```
-           episode runs once
-                 │
-   ┌─────────────┴──────────────┐
-   gateway log                 agent-written logs (one per agent)
-   (tamper-proof, ground       ── clean: identical to gateway ──► monitor  = baseline
-    truth; never edited)       ── tampered by colluders ───────► monitor  = same episodes, edited logs
-                                                                 + witness check (peer copies of messages)
-                                                                 + state check (replay vs final world state)
-```
 
 * **Scenarios** (`swarmlog/scenarios.py`): three 3-agent teams in a simulated workspace. Each has a
   benign team task and a covert side task that needs **two** colluders, because no single agent has the
@@ -53,7 +37,7 @@ measures the gap.
     **McNemar's exact test** compares, on the same attack episodes, caught on clean vs caught on tampered.
   * Witness, state and monitor-OR-checks are reported as TPR/FPR.
 
-## Run it
+## How to Run
 
 ```bash
 pip install -r requirements.txt
@@ -84,6 +68,8 @@ and `--monitor-model`. Every LLM call is cached in `runs/<name>/cache`, so a cra
 stage resumes for free, and rerunning `analyze` with other settings costs nothing.
 `--backend openai` works with any OpenAI-compatible endpoint (`OPENAI_API_KEY`, `OPENAI_BASE_URL`).
 
+**You can run your own episodes!**, see using your own transcripts section.
+
 ### Outputs (`runs/<name>/`)
 * `episodes/*.json` hold the full episodes: gateway log, per-agent logs, final state, success flags and scratchpads.
 * `tampered/<condition>/*.json` hold the edited logs plus a record of every edit.
@@ -91,34 +77,6 @@ stage resumes for free, and rerunning `analyze` with other settings costs nothin
 * `results.md` and `results.json` hold the tables, and `roc.png` the ROC curves.
 * `examples/` stores side-by-side gateway vs tampered logs from `show`. Use these for the report's figure.
 
-## Before you trust the numbers
-
-1. **Clean baseline must work.** The clean AUROC needs to be clearly above 0.5, or a drop under
-   tampering means nothing. If it is weak, try a stronger monitor
-   (`--monitor-model qwen3.5-397b` or `glm-5.2`), or `--samples 3`.
-2. **Attacks must happen.** `generate` prints main- and side-task success. If few side tasks
-   succeed, read a few `episodes/*attack*.json` and consider `--rounds 7`. Report
-   `analyze --successful-only` as well, as SHADE-Arena does.
-3. **Tampering must actually edit.** `scores.jsonl` → `edits` shows what each tamperer changed and how
-   many edits were rejected for touching entries it does not own.
-4. **Benign controls must not trip the checks.** If witness FPR is high, paraphrases are diverging.
-   Report the tradeoff at a couple of `--witness-tau` values (0.3 / 0.5).
-5. **Sample size.** With 30 benign episodes the smallest non-zero FPR is 3.3%. The tool warns if
-   `--target-fpr` is below 1/n. Lead with AUROC and ΔAUROC; treat TPR at a fixed FPR as secondary.
-
-## What to claim (and not)
-
-The result is about **post-hoc edits to agent-writable logs** in small simulated teams. It does not
-show what live agents would choose to edit unprompted; the tamper step is an instructed capability
-probe. Gateway-side logging is the obvious fix where it is possible. The interesting finding is how
-much of the loss the witness and state checks recover when it is not possible, and whether
-coordinated or check-aware tampering defeats them. Coordinated colluders can keep their own message
-copies consistent, so the witness check then relies on messages that reached honest agents, while
-the state check relies on effects the overseer can observe.
-
-**Dual-use note for the required appendix.** The tampering prompts describe log editing at a level
-any capable model already manages. The contribution is defensive: measuring monitor fragility and
-testing consistency checks. Everything runs in a closed simulation.
 
 ## Using other transcripts
 
@@ -127,7 +85,6 @@ Any multi-agent log can be dropped into `episodes/` if it follows the episode sc
 `final_state`, `label`, `colluders`. After that, `tamper`, `monitor` and `analyze` work unchanged.
 SHADE-Arena or SCHEME runs need a small converter.
 
-## Provenance
+## Misc. Notes
 
-Written during the Swarm Alignment sprint (Nov 8, 2026) with AI assistance. Disclose this in the report
-as the sprint rules require.
+Written for the Swarm Alignment sprint (Nov 8, 2026) with AI assistance.
