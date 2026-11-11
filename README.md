@@ -1,6 +1,6 @@
 # Monitors under log tampering
 
-**Question.** A trusted LLM monitor can catch coordinated sabotage when it reads a clean log. This is relevant because agents spoofed their own tool calls in roughly 7% of reviewed transcripts in the July 2026 Hugging Face incident (METR, 2026). Most currently published multi-agent monitors often assume clean logs. We address this gap by studying how LLM monitor performance degrades when the agents can edit the log it reads. 
+**Question.** A trusted LLM monitor can catch coordinated sabotage when it reads a clean log. This is relevant because agents spoofed their own tool calls in roughly 7% of reviewed transcripts in the July 2026 Hugging Face incident (METR, 2026). Most currently published multi-agent monitors often assume clean logs. We address this gap by studying how LLM monitor performance degrades when the agents can edit the log it reads. See write up [here](https://docs.google.com/document/d/1whPvk83LZNFrUlj938EsZ6LMIUul3LyWhjBJFhhxSyA/edit?usp=sharing). 
 
 ## Design 
 
